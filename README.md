@@ -6,7 +6,7 @@ This tool attempts to aid in the quick visualisation of Castep profiling files b
 Example usage
 ------------
 Plots the first example profile 
-      ./pgraph.py example-profiles/qqq.0001.profile
+> ./pgraph.py example-profiles/qqq.0001.profile
 
 Plots more data from the first example profile with a total module time cutoff of 5% of the total
-      ./pgraph.py example-profiles/qqq.0001.profile -c 5
+> ./pgraph.py example-profiles/qqq.0001.profile -c 5
