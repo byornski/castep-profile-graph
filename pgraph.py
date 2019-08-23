@@ -12,7 +12,7 @@ parser.add_argument("-n","--network", dest="method", action="store_const",
                     help="Plot a network graph rather than a Sankey diagram")
 
 parser.add_argument("-c","--cutoff", dest="cutoff_percentage", action="store",
-                    default="20",
+                    default="10",
                     help = "The percentage total time at which to disregard a subroutine")
 
 #Parse the actual arguments
@@ -33,10 +33,22 @@ def read_data(filename):
         data = fd.read().split("+-----------------------------------------------------------------------------+")
     return data
 
+
+translate_dict = {
+    "check":"castep"
+    }
+
 if args.method == "plotly":
     #Define a tranform that we apply to all sub names
     def name_transform(name):
-        return name.split("_")[0]
+        n =  name.split("_")[0]
+        if n in translate_dict:
+            return translate_dict[n]
+        else:
+            return n
+
+
+        
 elif args.method == "networkx":
     def name_transform(name):
         return name
@@ -63,7 +75,7 @@ total_time = max(s.time for s in subs)
 min_time = total_time * float(args.cutoff_percentage) / 100.
 
 #Filter subs based on 1% of total time
-#subs = filter(lambda s:s.time > min_time, subs)
+subs = filter(lambda s:s.time > min_time, subs)
 sub_set = set(s.name for s in subs)
 
 #Make a dict of node ids
@@ -87,15 +99,12 @@ for s in subs:
 
 
 
-#Filter based on min time
-
 source_list = []
 target_list = []
 value_list = []
 
 #Finally build links lists
 for s,t in links_dict:
-
 
     if links_dict[(s,t)] < min_time:
         continue
