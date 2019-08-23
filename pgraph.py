@@ -106,7 +106,8 @@ value_list = []
 #Finally build links lists
 for s,t in links_dict:
 
-    if links_dict[(s,t)] < min_time:
+    #Make sure link isnt too small
+    if 5*links_dict[(s,t)] < min_time:
         continue
     
     if args.method == "plotly":
