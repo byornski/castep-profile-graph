@@ -152,5 +152,5 @@ elif args.method == "networkx":
 
     A = to_agraph(G)
     A.layout('dot')
-    A.draw("{}.png".format(filename))
-    print "Generated {}.png".format(filename)
+    A.draw("{}.png".format(args.filename))
+    print "Generated {}.png".format(args.filename)
